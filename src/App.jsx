@@ -10,6 +10,10 @@ export default function Hangman() {
 
     const [guessedLetters, setGuessedLetters] = React.useState([''])
 
+    const wrongGuesses = guessedLetters.filter(letter => !word.toLowerCase().includes(letter)).length
+
+    console.log(wrongGuesses)
+
     function handleLetterClick(letter) {
         setGuessedLetters(prevLetters => prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter])
     }
@@ -29,20 +33,22 @@ export default function Hangman() {
 
             <div className="languageContainer">
                 <section className="languageList">
-                    {languages.map(language => (
-                        <div key={language.name} style={{ backgroundColor: language.backgroundColor, color: language.color }}> {language.name} </div>
-                    ))
-                    }
+                    {languages.map((language, index) => {
+                        const className = clsx("language", index < wrongGuesses && "lost")
+                        return (
+                        <div key={language.name} className={className} style={{ backgroundColor: language.backgroundColor, color: language.color }}> {language.name} </div>
+                        )
+                    })}
                 </section>
             </div>
 
 
             <section className="word">
                 {word.split("").map((letter, index) =>
-                        <span key={index}>
-                            {letter}
-                        </span>
-                      
+                    <span key={index}>
+                        {guessedLetters.includes(letter.toLowerCase()) ? letter.toUpperCase() : ""}
+                    </span>
+
                 )}
             </section>
 
@@ -58,7 +64,7 @@ export default function Hangman() {
 
                     return (<button key={letter} onClick={() => handleLetterClick(letter)}
                         className={className}
-                        >
+                    >
                         {letter.toUpperCase()}
                     </button>
 
