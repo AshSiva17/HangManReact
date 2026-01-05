@@ -24,8 +24,8 @@ header h1{
 }
 
 header h3{
-  font-size: 1rem;
     font-size: 0.875rem;
+    font-weight: 400;
     max-width: 350px;
     color: #8E8E8E;
 }
@@ -46,4 +46,38 @@ header h3{
 .gameStatus p{
     margin: 4px 0 8px 0;
     font-weight: 500;
+}
+
+.languageList{
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  justify-content: center;
+  max-width: 350px;
+}
+
+.languageList div{
+  padding: 4.5px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.word{
+  margin-top: 40px;
+  font-weight: 700;
+  text-align: center;
+  color: #F9F4DA;
+}
+
+.word span{
+  font-size: 1.5rem;
+  border-bottom: 3px solid #F9F4DA;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 0 1px;
+  text-align: center;
+  background-color: #323232;
+  padding: 5px;
 }
