@@ -30,3 +30,16 @@ header h3{
     color: #8E8E8E;
 }
 
+.gameStatus{
+  text-align: center;
+  margin-top: 50px;
+  padding: 1px 0;
+  background-color: #10A95B;
+}
+
+.gameStatus h3{
+  margin: 16;
+}
+.gameStatus p{
+  margin: 16;
+}
