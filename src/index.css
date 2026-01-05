@@ -48,6 +48,10 @@ header h3{
     font-weight: 500;
 }
 
+.languageContainer{
+  display: flex;
+  justify-content: center;
+}
 .languageList{
   margin-top: 30px;
   display: flex;
@@ -71,7 +75,7 @@ header h3{
 }
 
 .word span{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-bottom: 3px solid #F9F4DA;
   display: inline-block;
   width: 40px;
@@ -80,4 +84,48 @@ header h3{
   text-align: center;
   background-color: #323232;
   padding: 5px;
+}
+
+.keyboard{
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  max-width: 400px;
+
+}
+
+.keyboard button{
+  width: 40px;
+  height: 40px;
+  background-color: #FCBA29;
+  border: 1px solid white;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.keyboard button.correct{
+  background-color: #10A95B;
+  cursor: default;
+}
+
+.keyboard button.wrong{
+  background-color: #EC5D49;
+  cursor: default;
+}
+
+.newGame{
+  margin-top: 30px;
+  padding: 6px 12px;
+  background-color: #11B5E5;
+  border: 1px solid white;
+  border-radius: 4px;
+  width: 225px;
+  height: 40px;
+  font-weight: 500;
+  display: block;
+  margin-inline: auto;
+  cursor: pointer;
 }
