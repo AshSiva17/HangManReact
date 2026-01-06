@@ -12,12 +12,24 @@ export default function Hangman() {
 
     const wrongGuesses = guessedLetters.filter(letter => !word.toLowerCase().includes(letter)).length
 
+    const isGameWon = word.split("").every(letter => guessedLetters.includes(letter.toLowerCase()))
+
+    const isGameLost = wrongGuesses >= languages.length - 1
+
     console.log(wrongGuesses)
 
     function handleLetterClick(letter) {
         setGuessedLetters(prevLetters => prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter])
     }
 
+    const gameStatus = clsx("gameStatus", {
+        won: isGameWon && !isGameLost,
+        lost: isGameLost && !isGameWon
+    })
+
+    const statusTextTop = isGameWon ? "You Win!" : isGameLost ? "Game Over!" : "Game Over!"
+
+    const statusTextBottom = isGameWon ? "Well Done 🎉" : isGameLost ? "You lose! Better start learning Assembly 😭" : "You lose! Better start learning Assembly 😭"
 
     return (
         <main>
@@ -26,17 +38,18 @@ export default function Hangman() {
                 <h3>Guess the word in under 8 attempts to keep the programming world safe from Assembly</h3>
             </header>
 
-            <section className="gameStatus">
-                <h3>You Win!</h3>
-                <p>Well Done 🎉</p>
+
+            <section className={gameStatus}>
+                <h3>{statusTextTop}</h3>
+                <p>{statusTextBottom}</p>
             </section>
 
             <div className="languageContainer">
                 <section className="languageList">
                     {languages.map((language, index) => {
-                        const className = clsx("language", index < wrongGuesses && "lost")
+                        const className = clsx("language", (index < wrongGuesses && index < languages.length - 1) && "lost")
                         return (
-                        <div key={language.name} className={className} style={{ backgroundColor: language.backgroundColor, color: language.color }}> {language.name} </div>
+                            <div key={language.name} className={className} style={{ backgroundColor: language.backgroundColor, color: language.color }}> {language.name} </div>
                         )
                     })}
                 </section>
@@ -72,9 +85,9 @@ export default function Hangman() {
                 })}
             </section>
 
-            <button className="newGame">
+            {(isGameLost || isGameWon) && <button className="newGame">
                 New Game
-            </button>
+            </button>}
         </main>
     )
 }
