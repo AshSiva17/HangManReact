@@ -40,21 +40,22 @@ header h3 {
 }
 
 .gameStatus.won {
-  text-align: center;
-  margin-top: 50px;
-  padding: 1px 0;
   background-color: #10A95B;
-  color: #F9F4DA;
   visibility: visible;
 }
 
 .gameStatus.lost {
-  text-align: center;
-  margin-top: 50px;
-  padding: 1px 0;
   background-color: #BA2A2A;
-  color: #F9F4DA;
   visibility: visible;
+}
+
+.gameStatus.wrong{
+  background-color: #7A5EA7;
+  visibility: visible;
+}
+
+.gameStatus.wrong p{
+  visibility: hidden;
 }
 
 .gameStatus h3 {

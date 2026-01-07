@@ -1,6 +1,6 @@
 import React from "react"
 import { languages } from "./data/languages.js"
-import {utils} from "./data/utils.js"
+import { getFarewellText } from "./data/utils.js"
 import clsx from 'clsx';
 
 
@@ -17,21 +17,23 @@ export default function Hangman() {
 
     const isGameLost = wrongGuesses >= languages.length - 1
 
-    console.log(wrongGuesses)
-
     function handleLetterClick(letter) {
         setGuessedLetters(prevLetters => prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter])
     }
 
     const gameStatus = clsx("gameStatus", {
         won: isGameWon && !isGameLost,
-        lost: isGameLost && !isGameWon
+        lost: isGameLost && !isGameWon,
+        wrong: !isGameWon && !isGameLost && wrongGuesses > 0
     })
 
-    const statusTextTop = isGameWon ? "You Win!" : isGameLost ? "Game Over!" : "Game Over!"
+    let farewellText = ""
+    if (wrongGuesses > 0 && wrongGuesses < languages.length) {
+        farewellText = getFarewellText(languages[wrongGuesses - 1].name)
+    }
+    const statusTextTop = isGameWon ? "You Win!" : isGameLost ? "Game Over!" : wrongGuesses > 0 ? farewellText : "Game Over!"
 
-    const statusTextBottom = isGameWon ? "Well Done 🎉" : isGameLost ? "You lose! Better start learning Assembly 😭" : "You lose! Better start learning Assembly 😭"
-
+    const statusTextBottom = isGameWon ? "Well Done 🎉" : "You lose! Better start learning Assembly 😭"
     return (
         <main>
             <header>
@@ -49,9 +51,7 @@ export default function Hangman() {
                 <section className="languageList">
                     {languages.map((language, index) => {
                         const className = clsx("language", (index < wrongGuesses && index < languages.length - 1) && "lost")
-                        return (
-                            <div key={language.name} className={className} style={{ backgroundColor: language.backgroundColor, color: language.color }}> {language.name} </div>
-                        )
+                        return <div key={language.name} className={className} style={{ backgroundColor: language.backgroundColor, color: language.color }}> {language.name} </div>
                     })}
                 </section>
             </div>
