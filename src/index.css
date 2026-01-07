@@ -27,6 +27,7 @@ header h3 {
   font-size: 0.875rem;
   font-weight: 400;
   max-width: 350px;
+  margin-inline: auto;
   color: #8E8E8E;
 }
 
