@@ -78,6 +78,7 @@ export default function Hangman() {
 
                     return (<button key={letter} onClick={() => handleLetterClick(letter)}
                         className={className}
+                        disabled={isGameWon || isGameLost}
                     >
                         {letter.toUpperCase()}
                     </button>
