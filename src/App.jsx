@@ -6,16 +6,14 @@ import clsx from 'clsx';
 
 export default function Hangman() {
     const [word, setWord] = React.useState("REACT")
+    const [guessedLetters, setGuessedLetters] = React.useState([''])
 
     const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
-    const [guessedLetters, setGuessedLetters] = React.useState([''])
-
     const wrongGuesses = guessedLetters.filter(letter => !word.toLowerCase().includes(letter)).length
-
     const isGameWon = word.split("").every(letter => guessedLetters.includes(letter.toLowerCase()))
-
     const isGameLost = wrongGuesses >= languages.length - 1
+    const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
 
     function handleLetterClick(letter) {
         setGuessedLetters(prevLetters => prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter])
@@ -42,7 +40,11 @@ export default function Hangman() {
             </header>
 
 
-            <section className={gameStatus}>
+            <section
+                className={gameStatus}
+                aria-live="polite"
+                role="status"
+            >
                 <h3>{statusTextTop}</h3>
                 <p>{statusTextBottom}</p>
             </section>
@@ -66,6 +68,19 @@ export default function Hangman() {
                 )}
             </section>
 
+            <section
+                className="sr-only"
+                aria-live="polite"
+                role="status"
+            >
+                <p>
+                    {word.includes(lastGuessedLetter) ? `Good guess! The word has the letter ${lastGuessedLetter.toUpperCase()}` : `Sorry, the word does not have the letter ${lastGuessedLetter.toUpperCase()}`}
+                    You have {languages.length - 1 - wrongGuesses} attempts remaining.
+                </p>
+                <p>Current word: {word.split("").map(letter =>
+                    guessedLetters.includes(letter.toLowerCase()) ? letter : "blank").join(" ")}</p>
+            </section>
+
             <section className="keyboard">
                 {alphabet.split("").map((letter) => {
                     const isGuessed = guessedLetters.includes(letter)
@@ -79,6 +94,8 @@ export default function Hangman() {
                     return (<button key={letter} onClick={() => handleLetterClick(letter)}
                         className={className}
                         disabled={isGameWon || isGameLost}
+                        aria-disabled={isGameWon || isGameLost || guessedLetters.includes(letter)}
+                        aria-label={"Letter " + letter}
                     >
                         {letter.toUpperCase()}
                     </button>
