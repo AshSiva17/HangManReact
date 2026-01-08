@@ -2,6 +2,7 @@ import React from "react"
 import { languages } from "./data/languages.js"
 import { getFarewellText, getRandomWord } from "./data/utils.js"
 import clsx from 'clsx';
+import Confetti from 'canvas-confetti'
 
 
 export default function Hangman() {
@@ -32,6 +33,14 @@ export default function Hangman() {
     const statusTextTop = isGameWon ? "You Win!" : isGameLost ? "Game Over!" : wrongGuesses > 0 ? farewellText : "Game Over!"
 
     const statusTextBottom = isGameWon ? "Well Done 🎉" : "You lose! Better start learning Assembly 😭"
+
+    function GameWon(){
+        Confetti ( {
+            particleCount: 200,
+            spread: 70,
+            origin: { y: 0.6 }
+        })
+    }
 
     function resetGame() {
         setWord(getRandomWord())
@@ -109,13 +118,15 @@ export default function Hangman() {
                     )
                 })}
             </section>
-
+            
             {(isGameLost || isGameWon) && <button 
             className="newGame"
             onClick={resetGame}
             >
                 New Game
             </button>}
+
+            {isGameWon && GameWon()}
         </main>
     )
 }
